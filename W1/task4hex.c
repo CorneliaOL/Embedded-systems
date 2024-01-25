@@ -1,35 +1,35 @@
 /*Directives for defining identifiers from standard libraries*/
 
-#include <stdio.h>  /* preprocessor directive: includes Standard I/O library*/
-#include <ctype.h>  /* preprocessor directive: includes validation function */
-#include <stdlib.h> /* preprocessor directive: includes functions library*/
-#include <string.h> /* preprocessor directive: includes functions*/
+#include <stdio.h>      /* preprocessor directive: includes Standard I/O library*/
+#include <ctype.h>      /* preprocessor directive: includes validation function */
+#include <stdlib.h>     /* preprocessor directive: includes functions library*/
+#include <string.h>     /* preprocessor directive: includes functions*/
 
-#define BYTES 8   /* preprocessor directive: MACRO for defining number of bytes for system. 1 Byte = 8-bit*/
+#define BYTES 8         /* preprocessor directive: MACRO for defining number of bytes for system. 1 Byte = 8-bit*/
 
 
-void binaryToHex(unsigned int value); // function prototype
-int isValidUnsignedInt(const char *str); // function prototype
+void binaryToHex(unsigned int value);       // function prototype
+int isValidUnsignedInt(const char *str);    // function prototype
 
 
 
 int main(int argc, char *argv[]) {
 
     const char *targetString = "-h";        /* Variable initial: '-h' as string value to show help message */
-    char binaryString[BYTES*8+1]; // String to store binary input
+    char binaryString[BYTES*8+1];           // String to store binary input
 
 
     if( argc != 2 ){
 
         scanf("%64s", binaryString); // Read binary string
-        unsigned int binValue = strtoul(binaryString, NULL, 2); // Convert string to number
+        unsigned int binValue = strtoul(binaryString, NULL, 2);     // Convert string to number
         binaryToHex(binValue);
 
     } else {
 
         if(isValidUnsignedInt(argv[1])){
 
-            unsigned int binValue = strtoul(argv[1], NULL, 2); // Convert string to number
+            unsigned int binValue = strtoul(argv[1], NULL, 2);      // Convert string to number
 
             binaryToHex(binValue);
 
@@ -44,19 +44,19 @@ int main(int argc, char *argv[]) {
         }               // end of nested if statement
 
     }
-    return 0;
+    return 0;           // exits the main function with return value 0
 
 }
 
 
 //Function to convert from binary to hex value with binary value as input argument
 void binaryToHex(unsigned int value) {
-    char hexString[BYTES*2+1]; // String initialization for 2 hex digits for two groups of 4 bits + null terminator
-    int lastIndex = BYTES*2; //
+    char hexString[BYTES*2+1];  // String initialization for 2 hex digits for two groups of 4 bits + null terminator
+    int lastIndex = BYTES*2;    // variable declaration & initialization for the last index
 
     hexString[lastIndex--] = '\0'; // null terminator for string
 
-    for (int i = 0; i < (BYTES*2+1); i++) { // for-loop for two groups of 4-bits i.e. 8-bits program
+    for (int i = 0; i < (BYTES*2+1); i++) { // for-loop for iterating over groups of 4-bits i.e. depends on defined Macro
         // Extract the rightmost 4 bits and map to hex character
 
         unsigned int fourBits = value & 0xF; // Bit masking for 4-bits groups
