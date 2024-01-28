@@ -1,9 +1,9 @@
 /*Directives for defining identifiers from standard libraries*/
 
-#include <stdio.h>  /* preprocessor directive: includes Standard I/O library*/
-#include <ctype.h>  /* preprocessor directive: includes validation function */
-#include <stdlib.h> /* preprocessor directive: includes functions library*/
-#include <string.h> /* preprocessor directive: includes functions*/
+#include <stdio.h>      /* preprocessor directive: includes Standard I/O library*/
+#include <ctype.h>      /* preprocessor directive: includes validation function */
+#include <stdlib.h>     /* preprocessor directive: includes functions library*/
+#include <string.h>     /* preprocessor directive: includes functions*/
 
 
 void binaryToHex(unsigned long long int value); // function prototype
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {  //start of main function
         } else if(strcmp(argv[1], targetString) == 0){    // else-if-Block to check argument for string 'h'
 
             printf("Help message - Please enter program name (space) valid decimal digits");
-            return 0;       // exist program with return value 0
+            return 0;                                               // exist program with return value 0
 
         } else {                                    //returns message in case of invalid user input
             printf("Error: Invalid input: Please enter valid binary digits.\n");
