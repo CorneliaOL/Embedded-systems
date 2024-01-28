@@ -5,78 +5,98 @@
 #include <stdlib.h> /* preprocessor directive: includes functions library*/
 #include <string.h> /* preprocessor directive: includes functions*/
 
-#define BYTES 8   /* preprocessor directive: MACRO for defining number of bytes for system. 1 Byte = 8-bit*/
 
-
-void binaryToHex(unsigned int value); // function prototype
+void binaryToHex(unsigned long long int value); // function prototype
 int isValidUnsignedInt(const char *str); // function prototype
 
 
+int main(int argc, char *argv[]) {  //start of main function
 
-int main(int argc, char *argv[]) {
-
-    const char *targetString = "-h";        /* Variable initial: '-h' as string value to show help message */
-    char binaryString[BYTES*8+1]; // String to store binary input
+    const char *targetString = "-h";        // Variable initial: '-h' as string value to show help message
+    char binaryString[9]; // String to store binary input
 
 
     if( argc != 2 ){
 
-        scanf("%64s", binaryString); // Read binary string
-        unsigned int binValue = strtoul(binaryString, NULL, 2); // Convert string to number
+        scanf("%s", binaryString); // Read binary string
+        unsigned long long int binValue = strtoull(binaryString, NULL, 2); // Convert string to number
         binaryToHex(binValue);
 
     } else {
 
-        if(isValidUnsignedInt(argv[1])){
+        if(isValidUnsignedInt(argv[1])){                // if-block to check the validity of input i.e. only digits allowed
 
-            unsigned int binValue = strtoul(argv[1], NULL, 2); // Convert string to number
+            unsigned long long int binValue = strtoull(argv[1], NULL, 2); // Convert string to number
 
-            binaryToHex(binValue);
+            binaryToHex(binValue);                  // function call by passing user input as argument
 
-        } else if(strcmp(argv[1], targetString) == 0){
+        } else if(strcmp(argv[1], targetString) == 0){    // else-if-Block to check argument for string 'h'
 
             printf("Help message - Please enter program name (space) valid decimal digits");
             return 0;       // exist program with return value 0
 
         } else {                                    //returns message in case of invalid user input
-            printf("Error: Invalid input: Please enter a valid unsigned integer.\n");
+            printf("Error: Invalid input: Please enter valid binary digits.\n");
             return 0;                               //returns 1 in se of invalid user input
         }               // end of nested if statement
 
     }
-    return 0;
-
-}
-
+    return 0;           // returns control to the OS with integar value 0 in case of normal execution
+}                       // End of - main function
 
 //Function to convert from binary to hex value with binary value as input argument
-void binaryToHex(unsigned int value) {
-    char hexString[BYTES*2+1]; // String initialization for 2 hex digits for two groups of 4 bits + null terminator
-    int lastIndex = BYTES*2; //
+void binaryToHex(unsigned long long int value) {
 
-    hexString[lastIndex--] = '\0'; // null terminator for string
 
-    for (int i = 0; i < (BYTES*2+1); i++) { // for-loop for two groups of 4-bits i.e. 8-bits program
-        // Extract the rightmost 4 bits and map to hex character
+    unsigned int bitsValue = 0;     // variable declaration to calculate MSB (most significant bit)
 
-        unsigned int fourBits = value & 0xF; // Bit masking for 4-bits groups
-
-        if (fourBits < 10) {        //for-loop for mapping value from 0-9 as Hexadecimal
-            hexString[lastIndex--] = '0' + fourBits; //maps result to range [0-9]
-        } else {                    //else for mapping value greater than 10
-            hexString[lastIndex--] = 'A' + (fourBits - 10); //maps result to range [A-F]
-        }
-        value >>= 4; // right shift to bit mask next 4-bits group
+    // Calculate the minimum number of bits needed
+    unsigned int tempValue = value; // temporary variable declaration to count the minimum bits required value
+    while (tempValue > 0) {         // While loop to count the minimum bits required value
+        bitsValue++;                // while loop increment
+        tempValue >>= 1;            // right shift to find MSB and right shifting the value untill value is zero
     }
+
+
+    int bytesNeeded = (bitsValue + 7) / 8;      // Add 7 and integer divide by 8 (alternative to ceil math function)
+    int bitsToMask = bytesNeeded * 8;           // variable to hold value for multiple of 8's i.e. no of bytes
+
+    unsigned int displayMask = 1 << (bitsToMask - 1);
+
+    int fourBitsGroup = bitsToMask/4;           //variable to hold no. of 4-bits groups
+
+
+    char hexString[fourBitsGroup+1]; // declare char array of n-elements based on fourBitsGroup variable
+    int hexDigitIndex = fourBitsGroup-1;  // declare variable from where to start inserting the converted data
+
+    hexString[fourBitsGroup] = '\0'; // null termination for string array i.e. the last array element
+
+    for (int i = 0; i < fourBitsGroup; i++) { // Process two groups of 4 bits
+
+        unsigned int fourBits = value & 0xF; // 0xF is the bitmask for 4 bits
+
+
+        if (fourBits < 10) {                // if-block to check if the result is between1 - 10
+            hexString[hexDigitIndex--] = '0' + fourBits;    // maps to digits 0-9 based on bitwise AND operation
+        } else {                            // else-block to check if the results falls under A-F range and maps to it
+            hexString[hexDigitIndex--] = 'A' + (fourBits - 10);     // mapping to ASCII character based on result
+        }
+
+        value >>= 4; // right shift by 4 bits for each iteration
+    }
+
     printf("%s\n", hexString); // Print hex string
-}
 
 
-// Function to check if a string represents a valid unsigned integer
-int isValidUnsignedInt(const char *str) {   //checks the validity of user input, returns 1 if all are digits
+
+}                                           //bin2hex function ends here
+
+
+// Function to check if a string represents a valid binary notation digits i.e. only 1's & 0's
+int isValidUnsignedInt(const char *str) {   //checks the validity of user input, returns 1 if criteria is met
     while (*str) {
 
-        if (!isdigit((unsigned char)*str)) { //if-flase condition , in case of any other char than digits
+        if (*str != '0' && *str != '1') { //if-flase condition , in case of any other char than digits
             return 0;  // Return false (0) if a non-digit character is found
         }
 

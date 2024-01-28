@@ -51,25 +51,31 @@ int main(int argc, char *argv[]) {      /* Start of - main function*/
 void displayBits(unsigned int input) {
 
 
-    int bitsValue = 0;
+    unsigned int bitsValue = 0;
 
     // Calculate the minimum number of bits needed
-    unsigned int tempValue = input;
-    while (tempValue > 0) {
-        bitsValue++;
-        tempValue >>= 1;
+    unsigned int tempValue = input; // temporary variable declaration to count the minimum bits required value
+    while (tempValue > 0) {         // While loop to count the minimum bits required value
+        bitsValue++;                // while loop increment
+        tempValue >>= 1;            // right shift to find MSB and right shifting the value untill value is zero
     }
 
-    // Round up to the nearest byte (8, 16, 24, 32, etc.)
-    int bytesNeeded = (bitsValue + 7) / 8; // Add 7 and integer divide by 8
-    int bitsToMask = bytesNeeded * 8;
+    //printf("bits value for %d is: %u \n", input,bitsValue);
+
+/*    https://www.scaler.com/topics/ceil-function-in-c/ *ceil function reference which requires double data type
+    Round up to the nearest byte (8, 16, 24, 32, etc.) */
+    int bytesNeeded = (bitsValue + 7) / 8; // Add 7 and integer divide by 8 (alternative to ceil math function)
+    int bitsToMask = bytesNeeded * 8;       //bitsMask factor to use for Bitwise Operation in for-loop
+
+    //printf("bytes needed: %d - bitsToMask: %d\n", bytesNeeded, bitsToMask);
 
     // Set the displayMask based on bitsToDisplay
-    unsigned int displayMask = 1 << (bitsToMask - 1);
+    unsigned int displayMask = 1 << (bitsToMask - 1);   // Dynamic Bitmask value based on counted MSB position
+    // calculated by finding upper bound ( multiple of 8)
 
     // Loop through the bits to display
-    for (int c = 1; c <= bitsToMask; ++c) {
-        putchar(input & displayMask ? '1' : '0');
-        displayMask >>= 1;
-    }
-}
+    for (int c = 1; c <= bitsToMask; ++c) {             // for-loop to perform bitwise operation
+        putchar(input & displayMask ? '1' : '0');       // prints 1's or 0's based on bitwise AND operation
+        displayMask >>= 1;                              // between bitMask and input value
+    }                                                   // bits can be printed by either right shifting bitMask value
+}                                                       // or left shifting input-value and performing AND operation
