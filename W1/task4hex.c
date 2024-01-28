@@ -10,30 +10,30 @@ void binaryToHex(unsigned long long int value); // function prototype
 int isValidUnsignedInt(const char *str); // function prototype
 
 
-int main(int argc, char *argv[]) {  //start of main function
+int main(int argc, char *argv[]) {          //start of main function
 
     const char *targetString = "-h";        // Variable initial: '-h' as string value to show help message
-    char binaryString[9]; // String to store binary input
+    char binaryString[9];                   // String to store binary input
 
 
-    if( argc != 2 ){
+    if( argc != 2 ){                        // if-block to check if no argument is provided with filename
 
         scanf("%s", binaryString); // Read binary string
 
-        if(isValidUnsignedInt(binaryString)){
+        if(isValidUnsignedInt(binaryString)){     // input validation function call within if-block
             unsigned long long int binValue = strtoull(binaryString, NULL, 2); // Convert string to number
-            binaryToHex(binValue);
+            binaryToHex(binValue);              // function call - in case of valid input
 
-        } else {
+        } else {                                      // else-block for invlaid input found
 
             printf("Error: Invalid input: Please enter valid binary digits.\n");
             return 0;                               //returns 1 in se of invalid user input
         }
 
 
-    } else {
+    } else {                                // else-block for exactly one arguement provided
 
-        if(isValidUnsignedInt(argv[1])){                // if-block to check the validity of input i.e. only digits allowed
+        if(isValidUnsignedInt(argv[1])){              // if-block to check the validity of input i.e. only digits allowed
 
             unsigned long long int binValue = strtoull(argv[1], NULL, 2); // Convert string to number
 
@@ -98,7 +98,7 @@ void binaryToHex(unsigned long long int value) {
 
 
 
-}                                           //bin2hex function ends here
+}   //bin2hex function ends here
 
 
 // Function to check if a string represents a valid binary notation digits i.e. only 1's & 0's
