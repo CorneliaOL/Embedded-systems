@@ -19,8 +19,17 @@ int main(int argc, char *argv[]) {  //start of main function
     if( argc != 2 ){
 
         scanf("%s", binaryString); // Read binary string
-        unsigned long long int binValue = strtoull(binaryString, NULL, 2); // Convert string to number
-        binaryToHex(binValue);
+
+        if(isValidUnsignedInt(binaryString)){
+            unsigned long long int binValue = strtoull(binaryString, NULL, 2); // Convert string to number
+            binaryToHex(binValue);
+
+        } else {
+
+            printf("Error: Invalid input: Please enter valid binary digits.\n");
+            return 0;                               //returns 1 in se of invalid user input
+        }
+
 
     } else {
 
