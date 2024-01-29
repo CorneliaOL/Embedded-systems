@@ -5,13 +5,19 @@
 #include <signal.h>
 
 // "Global" variable used for checking if ctrl Z has been pressed or not
-volatile int stopSignal = 0;
+int stopSignal = 0;
 
 // A method that checks if the signum is the same as sigstp, if true it will change the stopSignal that are used in main
 void ctrlZ(int signum) {
-    if (signum == SIGTSTP) {
-        stopSignal = 1;
+    //If the given signal is equal to the stop signal 
+    if (signum == SIGTSTP || signum == SIGINT) {
+        stopSignal = 1; //Change global stopsignal to 1
     }
+}
+
+//Define function to remove \n character from end of string, this will be null terminated twice which we are aware of
+void stripNewLine(char* array){
+    array[strlen(array)-1]='\0'; //Reasign the second last charcater from \n to \0
 }
 
 
@@ -21,37 +27,47 @@ int main(int argc, char* argv[]){
     // If the wrong amount of arguments is inserted, return error code 1 and print a message to the user
     if (argc != 2){
         printf("Please only provide a number to set how many steps the letters shall shift\n");
-        return 1;
+        return 1; //Return 1 indicating unsuccessful termination
     }
-    // declare char input as null, will later get used to hold user input
-    char *input = NULL;
-    //malloc the input char to assign size 100
-    input = (char *) malloc(100);
+    // declare char input as an array of length 100, will later get used to hold user input
+    char input[100];
 
     // declare an int that will hold the number of character shift specified by user
     int shiftNum;
     //use errno from errno.h to check for error in the next step
     errno = 0;
-    //Fetch the amounts of shift steps from the argv specified by user
-    long shiftNumConv = strtol(argv[1],NULL, 10 );
+    //Declare character pointer to hold eventual non numerical characters
+    char* p;
+    //Fetch the amounts of shift steps from the argv specified by user, any eventual non number characters will be stored in p, 10 is indicating that the recieved number is decimal
+    long shiftNumConv = strtol(argv[1],&p, 10 );
+
+    //Checks if character in *p is null terminator
+    if ( *p != '\0' ){
+        printf("Error\n");
+        return 1; //Return 1, indicating unsuccessful execution
+    }
+
     // if errno is not 0, return an error code. Else assign int shiftNum to the number extracted in line 13
     if (errno != 0) {
-        return 1;
+        return 1; //Return 1, indicating unsuccessful execution
     } else {
-        shiftNum = shiftNumConv;
+        shiftNum = shiftNumConv; //Put the inputed value into the variable that holds the number of character shifts, long -> int
     }
 
     printf("write a string! :D \n");
+    //While true, perpetual loop
     while (1) {
         // use fgets as scanner to get user input, using 99 spaces instead of 99 to have place for end of line character
         fgets(input, 99, stdin);
+
+        //Removes \n character that is included in fgets
+        stripNewLine(input);
 
         //if global variable stopsignal is one it means that the control + z command has been executed, then we free the space malloc to
         //input and return 0 as a success return value
         if (stopSignal == 1) {
             printf("Stopping the program...\n");
-            free(input);
-            return 0;
+            return 0; //Return 0, indicating successful execution
         }
         //Iterate over all characters in the input
         for(int i = 0; i < strlen(input); i++){
