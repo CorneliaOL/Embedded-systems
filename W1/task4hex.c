@@ -70,7 +70,7 @@ void binaryToHex(unsigned long long int value) {
     int bytesNeeded = (bitsValue + 7) / 8;      // Add 7 and integer divide by 8 (alternative to ceil math function)
     int bitsToMask = bytesNeeded * 8;           // variable to hold value for multiple of 8's i.e. no of bytes
 
-    unsigned int displayMask = 1 << (bitsToMask - 1);
+    unsigned int displayMask = 1 << (bitsToMask - 1); //Defines bitmask to extract hex value
 
     int fourBitsGroup = bitsToMask/4;           //variable to hold no. of 4-bits groups
 
@@ -103,6 +103,7 @@ void binaryToHex(unsigned long long int value) {
 
 // Function to check if a string represents a valid binary notation digits i.e. only 1's & 0's
 int isValidUnsignedInt(const char *str) {   //checks the validity of user input, returns 1 if criteria is met
+    //While the value of str is not 0
     while (*str) {
 
         if (*str != '0' && *str != '1') { //if-flase condition , in case of any other char than digits

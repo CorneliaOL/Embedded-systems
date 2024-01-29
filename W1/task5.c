@@ -121,7 +121,7 @@ void draw_histogram_horizontal(int* frequency){
             }
             iterator++; // Increment the pointer to go through the array
         }
-        max = max - 1;
+        max = max - 1; //Decrement max value
         printf("\n"); //Print a line break after the array is gone through
     }
     //For every index in frequency

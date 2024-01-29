@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {      /* Start of - main function*/
 void displayBits(unsigned int input) {
 
 
-    unsigned int bitsValue = 0;
+    unsigned int bitsValue = 0; //Initialize variable used to find most significant bit
 
     // Calculate the minimum number of bits needed
     unsigned int tempValue = input; // temporary variable declaration to count the minimum bits required value
