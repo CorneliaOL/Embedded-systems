@@ -1,3 +1,8 @@
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 1
+// Exercise 1
+// Submission code: 125455
+
 //Import standard input output
 #include <stdio.h>
 

@@ -1,3 +1,8 @@
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 1
+// Exercise 2
+// Submission code: 125455
+
 #include <string.h> // Used by strlen
 #include <stdio.h>
 #include <stdlib.h>

@@ -1,3 +1,7 @@
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 1
+// Exercise 4b
+// Submission code: 125455
 /*Directives for defining identifiers from standard libraries*/
 
 #include <stdio.h>      /* preprocessor directive: includes Standard I/O library*/
