@@ -1,21 +1,24 @@
+//Import statements
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 // -----typedefs -------
-typedef struct {
-    char firstname[20];
-    char famname[20];
-    char pers_number[13]; // yyyymmddnnnc
-} PERSON;
+typedef struct { //Defines struct
+    char firstname[20]; //Defines struct field firstname which is a character array of length 20
+    char famname[20]; //Defines struct field famname which is a character array of length 20
+    char pers_number[13]; // Defines struct field pers_number which is a character array of length 13, expects format: yyyymmddnnnc
+} PERSON; //Name of this struct
+
 // Function declaration (to be extend)
 PERSON input_record(void); // Reads a person’s record.
 void write_new_file(PERSON *inrecord); // Creates a file and writes the first record
 void printfile(void); // Prints out all persons in the file
-void search_by_firstname(char *name); // Prints out the person if in list
+void search_by_firstname(void); // Prints out the person with the coresponding first name if present
+void search_by_famname(void); // Prints out the person with the coresponding famname if present
 void append_file(PERSON *inrecord); // appends a new person to the file
-PERSON* createPerson();
-char* get_name_to_search();
-void clearBuffer();
+PERSON* createPerson(void);
+void clearBuffer(void);
 
 #define filename "record.bin"
 
@@ -24,6 +27,7 @@ int main(void){
     PERSON* pPerson;
     int cont = 1;
     int menuChoice;
+    char searchBy;
 
     while(cont == 1){
         printf("1 Create a new and delete the old file.\n");
@@ -47,7 +51,18 @@ int main(void){
                 append_file(createPerson());
                 break;
             case 3:
-                search_by_firstname(get_name_to_search());
+
+                printf("Search by first name(1) or family name(2)?\n");
+                scanf("%c", &searchBy);
+                clearBuffer();
+
+                if(searchBy == '1'){
+                    search_by_firstname();
+                } else if(searchBy == '2'){
+                    search_by_famname();
+                } else{
+                    printf("Invalid character\n");
+                }
                 break;
             case 4:
                 printfile();
@@ -63,7 +78,7 @@ int main(void){
     return 0;
 }
 
-void printfile(){
+void printfile(void){
     FILE* pFile;
     PERSON person;
 
@@ -81,18 +96,44 @@ void printfile(){
     fclose(pFile);
 }
 
-char* get_name_to_search(){
+
+void search_by_firstname(void){
     char* search = malloc(20);
+    FILE* pFile;
+    PERSON found;
 
     printf("Type firstname you want to search:\n");
     scanf("%19s", search);
     clearBuffer();
 
 
-    return search;
+    if((pFile = fopen(filename, "rb")) == NULL){
+        printf("Could not open file\n");
+        return;
+    }
+
+    while (!feof(pFile)){
+
+        if(fread(&found, sizeof(PERSON), 1, pFile) && strcmp(found.firstname, search) == 0){
+            printf("First Name: %s\n", found.firstname);
+            printf("Family name: %s\n", found.famname);
+            printf("Personnummer: %s\n", found.pers_number);
+            printf("---------------------\n");
+        }
+    }
+
+    fclose(pFile);
+    free(search);
 }
 
-void search_by_firstname(char* name){
+void search_by_famname(void){
+    char* search = malloc(20);
+
+    printf("Type family name you want to search:\n");
+    scanf("%19s", search);
+    clearBuffer();
+
+
     FILE* pFile;
 
     PERSON found;
@@ -104,7 +145,7 @@ void search_by_firstname(char* name){
 
     while (!feof(pFile)){
 
-        if(fread(&found, sizeof(PERSON), 1, pFile) && strcmp(found.firstname, name) == 0){
+        if(fread(&found, sizeof(PERSON), 1, pFile) && strcmp(found.famname, search) == 0){
             printf("First Name: %s\n", found.firstname);
             printf("Family name: %s\n", found.famname);
             printf("Personnummer: %s\n", found.pers_number);
@@ -113,8 +154,9 @@ void search_by_firstname(char* name){
     }
 
     fclose(pFile);
-    free(name);
+    free(search);
 }
+
 
 void append_file(PERSON* inrecord){
     FILE* pFile;
@@ -144,8 +186,7 @@ void write_new_file(PERSON* inrecord){
 
 }
 
-PERSON* createPerson(){
-
+PERSON* createPerson(void){
     PERSON* pPerson = malloc(sizeof(PERSON));
 
     printf("First name?\n");
@@ -166,7 +207,7 @@ PERSON* createPerson(){
     return pPerson;
 }
 
-void clearBuffer(){
+void clearBuffer(void){
     //While the current character in the buffer is not \n or EOF
     while((getchar()) != '\n' && getchar() != EOF){
 
