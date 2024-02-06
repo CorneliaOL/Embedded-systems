@@ -1,6 +1,7 @@
-/*
-program to code and pack the bits in a byte (8-bits)
-*/
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 2
+// Exercise 4a
+// Submission code: 240618
 
 //Import statements
 #include <stdio.h>
@@ -51,7 +52,7 @@ int main(int argc, char * argv[]) {
             unsigned char packedByte = (engine_on << 7) | (gear_pos << 4) | (key_pos << 2) | (brake1 << 1) | (brake2 << 0);
 
             // Output the result
-            printf("%02X\n", packedByte); 
+            printf("%02X\n", packedByte);
         }
     }
 

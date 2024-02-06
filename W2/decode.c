@@ -1,3 +1,8 @@
+
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 2
+// Exercise 4b
+// Submission code: 240618
 //Import statements
 #include <stdio.h>
 #include <stdlib.h>
