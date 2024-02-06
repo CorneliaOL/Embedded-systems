@@ -11,14 +11,14 @@
 void decode(unsigned char); //Defines the decode function
 
 //Defines BIT1-BIT8 corresponding to bit 1 set to bit 8 set
-#define BIT1 1
-#define BIT2 1 << 1
-#define BIT3 1 << 2
-#define BIT4 1 << 3
-#define BIT5 1 << 4
-#define BIT6 1 << 5
-#define BIT7 1 << 6
-#define BIT8 1 << 7
+#define BIT1 0b1
+#define BIT2 0b10
+#define BIT3 0b100
+#define BIT4 0b1000
+#define BIT5 0b10000
+#define BIT6 0b100000
+#define BIT7 0b1000000
+#define BIT8 0b10000000
 
 //Start of main
 int main(int argc, char* argv[]){
