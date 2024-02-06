@@ -104,8 +104,6 @@ void search_by_firstname(void){
     PERSON found;
 
     printf("Type firstname you want to search:\n");
-    // scanf("%19s", search);
-    // clearBuffer();
     while(read(search, sizeof(search)) != 0){
         printf("Invalid input, try again:\n");
     }
@@ -127,15 +125,12 @@ void search_by_firstname(void){
     }
 
     fclose(pFile);
-    free(search);
 }
 
 void search_by_famname(void){
     char search[20];
 
     printf("Type family name you want to search:\n");
-    // scanf("%19s", search);
-    // clearBuffer();
 
     while(read(search, sizeof(search)) != 0){
         printf("Invalid input, try again:\n");
@@ -196,24 +191,17 @@ PERSON* createPerson(void){
     PERSON* pPerson = malloc(sizeof(PERSON));
 
     printf("First name?\n");
-    // scanf("%19s", pPerson -> firstname);
-    // clearBuffer();
     while(read(pPerson -> firstname, sizeof(pPerson -> firstname)) != 0){
         printf("Invalid input, try again:\n");
     }
 
     printf("Family name?\n");
-    // scanf("%19s", pPerson -> famname);
-    // clearBuffer();
     while(read(pPerson -> famname, sizeof(pPerson -> famname)) != 0){
         printf("Invalid input, try again:\n");
     }
 
 
     printf("Personnummber?\n");
-    // scanf("%12s", pPerson -> pers_number);
-    // clearBuffer();
-
     while(read(pPerson -> pers_number, sizeof(pPerson -> pers_number)) != 0){
         printf("Invalid input, try again:\n");
     }
@@ -234,6 +222,7 @@ int read(char* input, int size){
             *iterator = '\0';
             overFlowFlag = 0;
         }
+        iterator++;
     }
 
     if(overFlowFlag == 1){
