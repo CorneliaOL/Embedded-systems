@@ -1,70 +1,59 @@
+/*
+program to code and pack the bits in a byte (8-bits)
+*/
+
 //Import statements
 #include <stdio.h>
 #include <stdlib.h>
 
-//Defines BIT1 - BIT8 as the corresponding bit set
-#define BIT1 1
-#define BIT2 1 << 1
-#define BIT3 1 << 2
-#define BIT4 1 << 3
-#define BIT5 1 << 4
-#define BIT6 1 << 5
-#define BIT7 1 << 6
-#define BIT8 1 << 7
+#define BITMASK_1BIT 0x1 //Define bitmask that checks the first bit
+#define BITMASK_2BIT 0x3 //Define bitmask that checks the first two bit
+#define BITMASK_3BIT 0x7 //Define bitmask that checks the first three bit
 
-
-//Defines the function checkInput
-void checkInput(char* argv[]);
 
 //Start of main
-int main(int argc, char* argv[]){
-    unsigned char controlByte; //Declares variable that will hold the byte which holds the information to be packed
+int main(int argc, char * argv[]) {
 
-    //If arguements is not 6
-    if (argc != 6){
-        printf("Error: Wrong amount of arguments\n"); //Indicate to user that wrong ammount of arguments were provided
-        return 0;//Return 0 
+    // Input integers, used to store arguments
+    unsigned int engine_on, gear_pos, key_pos, brake1, brake2;
+
+    //If the program is not given the correct amount of arguments
+    if(argc != 6){
+
+        printf("Exactly five arguments allowed as input\n");
+
+    //If the program is given the correct amount of arguments, I.E. 5 arguments
+    } else {
+
+        engine_on = atoi(argv[1]); //Decodes first argument into its coresponding variable
+        gear_pos = atoi(argv[2]); //Decodes second argument into its coresponding variable
+        key_pos = atoi(argv[3]); //Decodes third argument into its coresponding variable
+        brake1 = atoi(argv[4]); //Decodes fourth argument into its coresponding variable
+        brake2 = atoi(argv[5]); //Decodes fifth argument into its coresponding variable
+
+        //If all inputs are not in valid range
+        if ((engine_on < 0 || engine_on > 1) //Checks if engine_on is in bounds as defined by the task
+        || (gear_pos < 0 || gear_pos > 4)  //Checks if gear_pos is in bounds as defined by the task
+        || (key_pos < 0 || key_pos > 2) //Checks if key_pos is in bounds as defined by the task
+        || (brake1 < 0 || brake1 > 1) //Checks if brake1 is in bounds as defined by the task
+        || (brake2 < 0 || brake2 > 1)) //Checks if brake2 is in bounds as defined by the task
+        {
+            printf("input should be in the range\n");
+        } else { //If all inputs are in valid range
+
+            engine_on &= BITMASK_1BIT; // Sets the first bit if it is set in the program argument
+            gear_pos &= BITMASK_3BIT; // Sets the first three bit if they are set in the program argument
+            key_pos &= BITMASK_2BIT; // Sets the first two bit if they are set in the program argument
+            brake1 &= BITMASK_1BIT; // Sets the first bit if it is set in the program argument
+            brake2 &= BITMASK_1BIT; // Sets the first bit if it is set in the program argument
+
+            // Pack the integers into a byte where the first argument is contained in the 8th bit and the last is contained in the 1st bit
+            unsigned char packedByte = (engine_on << 7) | (gear_pos << 4) | (key_pos << 2) | (brake1 << 1) | (brake2 << 0);
+
+            // Output the result
+            printf("%02X\n", packedByte); 
+        }
     }
 
-    checkInput(argv); //Call the checkInput function on the array of given arguments
-
-    //Pack each given argument into it's corresponding bit(s) as decided by the task definition, e.g. the first argument is to be stored in the 8th bit, so it is left shifted 7 times.
-    controlByte = (atoi(argv[1]) << 7) + (atoi(argv[2]) << 4) + (atoi(argv[3]) << 2) + (atoi(argv[4]) << 1) + atoi(argv[5]);
-
-    printf("%x\n", controlByte);
-
-    return 0; //Return 0, indicating successful termination
-}
-
-//Defines function that checks input
-void checkInput(char* argv[]){
-
-    //First argument is the program name
-
-    //if second argument is out of bounds as specified in the task
-    if(atoi(argv[1]) > 1 || atoi(argv[1]) < 0){
-        printf("First argument out of bounds\n");
-        exit(0); //Exit the program
-    }
-    //if third argument is out of bounds as specified in the task
-    if(atoi(argv[2]) > 7 || atoi(argv[2]) < 0){
-        printf("Second argument out of bounds\n");
-        exit(0); //Exit the program
-    }
-    //if fourth argument is out of bounds as specified in the task
-    if(atoi(argv[3]) > 3 || atoi(argv[3]) < 0){
-        printf("Third argument out of bounds\n");
-        exit(0); //Exit the program
-    }
-    //if fifth argument is out of bounds as specified in the task
-    if(atoi(argv[4]) > 1 || atoi(argv[4]) < 0){
-        printf("Fourth argument out of bounds\n");
-        exit(0); //Exit the program
-    }
-    //if sixth argument is out of bounds as specified in the task
-    if(atoi(argv[5]) > 1 || atoi(argv[5]) < 0){
-        printf("Fifth argument out of bounds\n");
-        exit(0); //Exit the program
-    }
-
+    return 0; //Return 0, indicating successful execution
 }

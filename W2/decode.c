@@ -76,6 +76,11 @@ void decode(unsigned char hexValue){
     bitmask = (BIT1) + (BIT2); //Set bitmask to the first bit + second bit
     key_pos = (bitmask & hexValue); //Sets the first two bits of key_pos variable to the same as hexValue, which is the argument to the program
     hexValue = hexValue >> 2; //Bit shift twice to the right, this will throw away the bits we just checked
+    //This value consists of 2 bits, so it can be up to 3, but it is specified in the task that max value is 2
+    if(key_pos > 2){
+        printf("Unvalid byte.\n");
+        exit(0); //If the value of gear_pos is greater than 4, exit the program
+    }
 
     bitmask = (BIT1) + (BIT2) + (BIT3); //Set bitmask to the first bit + second bit + third bit
     gear_pos = (bitmask & hexValue); //Sets the first three bits of gear_pos variable to the same as hexValue, which is the argument to the program

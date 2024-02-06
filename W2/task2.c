@@ -40,11 +40,13 @@ int main(){
 
     act_post = head; //Sets act_post to the head of the linked list
     nr = 0; //Sets nr to 0 to enumerate the linked list entries again
+    printf("\n");
     //While there is a next entry in the linked list
     while(act_post!=NULL){
         printf("\n Post nr %d : %d" , nr++, act_post->number);
         act_post=act_post->next; //Go to the next node in the linked list
     }
+    printf("\n");
     act_post = head; //Sets act_post to the head of the linked list
 // --- Free the allocated memory ---
     //While there is a next entry in the linked list, this statement also assigns act_post to the top of the linked list

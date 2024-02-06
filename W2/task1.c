@@ -110,9 +110,15 @@ ROBOT initialize(){
 
 //check the buffer for spaces and remove superflous characters from buffer
 void clearBuffer(){
+    char overflow = 0; //Declare variable that will flag once we have read our first overflow character
     char ch; //Declare variable that will hold current character in buffer
     //While the current character in the buffer is not \n or EOF
     while((ch = getchar()) != '\n' && getchar() != EOF){
+        // Checks if we find a non end of line/file character in the standard input
+        if(((ch != '\n') || (ch != EOF)) && overflow == 0){
+            printf("Too many characters, all will not be enterpetred!\n");
+            overflow = 1; //Change controll variable to 1 to indicate we have printed the warning
+        }
         if(ch == ' '){  // if-block for checking space btw characters
             printf("Space not allowed, exiting.\n");
             exit(0);    // exits in case of including space
