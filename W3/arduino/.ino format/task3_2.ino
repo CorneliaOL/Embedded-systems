@@ -1,7 +1,7 @@
 // (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
 // Work package 3
 // Exercise 3.2
-// Submission code: 
+// Submission code: 655738
 
 //Defines different pins the rows and cols are connected to
 #define row1 11 //defines that row 1 is connected to pin 11

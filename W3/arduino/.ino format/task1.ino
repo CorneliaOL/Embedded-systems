@@ -1,12 +1,12 @@
 // (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
 // Work package 3
 // Exercise 1
-// Submission code: 
+// Submission code: 655738
 
 
 //constant ins for pins and period of time, and state that will get used to check if button is pressed or not
 const int buttonPressed = 2, led1 = 3, led2 = 4, period = 1000;
-int state = 0, LED1state=0;
+int state = 0, LED1state=0; // integers that will get used in digitalWrite
 
 void setup()
 {
