@@ -12,7 +12,7 @@ Task 3.1: print temperature
 [Arduino](<task3.png>)
 
 Task 3.2: keyboard without library
-[Code] (<task3_2.c>)
+[Code](<task3_2.c>)
 [Arduino](<task3_2.png>)
 
 Task 4: keyboard with library
