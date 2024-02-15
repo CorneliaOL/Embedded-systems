@@ -10,3 +10,7 @@ Task 2: light and temperature sensors
 Task 3.1: print temperature
 [Code](<task3_1.c>)
 [Arduino](<task3.png>)
+
+Task 3.2: keyboard without library
+[Code] (<task3_2.c>)
+[Arduino](<task3_2.png>)
