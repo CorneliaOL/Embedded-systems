@@ -21,3 +21,6 @@ Task 4: keyboard with library
 
 Task 5: Adress
 [Code](<task5.c>)
+
+Task 6: string_copy
+[Code](<task6.c>)
