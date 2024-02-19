@@ -1,4 +1,10 @@
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 4
+// Exercise 3
+// Submission code: ??????
+
 #include <Adafruit_NeoPixel.h>
+
 
 #define PIN 6 //built in pins from the neopixel
 #define SENSOR_PIN A0 // temperature sensor pin
