@@ -5,19 +5,19 @@
 
 #include <Adafruit_NeoPixel.h>
 
-
 #define PIN 6 //built in pins from the neopixel
 #define SENSOR_PIN A0 // temperature sensor pin
 #define STATUS_LED_PIN 5 //pin that will signal if the temperature is "out of bounds" on the neopixel
 const int buzzer = 7; //buzzer to arduino pin 7
 int flag = 0; //flag that will get used in the loop()
-int lowerBound = 0;
-int higherBound = 100;
+int lowerBound = 0; //integer to define from with degree celcius should be measured on the neopixel
+int higherBound = 100; //integer to define to with degree celcius should be measured on the neopixel
 
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(24, PIN, NEO_GRB + NEO_KHZ800); // declare a strip object and set properties, can be found in the documentation
 
 void setup() {
+  Serial.begin(9600);
   
    cli(); //pause interuptions
   TCCR1A = 0;                 // Reset entire TCCR1A to 0 
@@ -38,14 +38,20 @@ void setup() {
 
 void loop() {
   if (flag == 1){ // if flag is equal to one
+    
   float temperature = readSensor(); // read temperature
   
   if (temperature >= lowerBound && temperature <= higherBound) { // check if temperature is within a certain temperature intervall
+    
     displayValueOnNeoPixel(temperature); //if so, display value on neoPixel ring
     digitalWrite(STATUS_LED_PIN, LOW); // Turn off the status LED
+    Serial.println(temperature);
+  
   } else {
+  
     // Temperature outside the desired range, light up the status LED
     displayStatusLED();
+  
   }
     flag = 0; //reset the flag to 0 and do nothing until flag is 1 again
   }
@@ -77,10 +83,11 @@ void displayStatusLED() {
   digitalWrite(STATUS_LED_PIN, HIGH);
 }
 
-//calculate the readings from the sensor to celius and 
+//calculate the readings from the sensor to celcuis and return float
+// the calculations are taken from WP3 (voltage to celcius - convertion)
 float readSensor() {
-  int sensorReading = analogRead(SENSOR_PIN);
-  float voltage = sensorReading * 5.0 / 1023.0;
-  float temperatureC = (voltage - 0.5) * 100.0;
-  return temperatureC;
+  int sensorReading = analogRead(SENSOR_PIN); //read the analog sensor value as int
+  float voltage = sensorReading * 5.0 / 1023.0; // calculate the voltage
+  float temperatureC = (voltage - 0.5) * 100.0; // convert to celcius
+  return temperatureC; // return the temperature in celcius
 }
