@@ -66,7 +66,7 @@ void sort(int number, int tab[]){
 		}
 	}
 }
-//TODO
+
 //define swap function
 void swap(int* swap1, int* swap2){
 	int temp = *swap1; //put the value swap1 is pointing to in the variable temp
