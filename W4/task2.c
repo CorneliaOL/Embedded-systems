@@ -37,7 +37,7 @@ void loop(){
     // The calculations for the number is (1/(6e6))*1024*255*COUNT = 1(second) which gives roughly 61.27 ≈ 61
     if(count == 61){
       iDegrees = iDegrees - 6; //Change the value of iDegrees to be itself - 6, this corresponds to a one 60th rotation in the clockwise direction
-      servo_A0.write(iDegrees--); //Turn the motor
+      servo_A0.write(iDegrees); //Turn the motor
       count = 0; //Reset the count variable to reset timer to 1 second
     }
     //If count is not 61, I.E. a second has not passed
