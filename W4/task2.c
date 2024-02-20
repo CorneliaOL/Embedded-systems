@@ -10,9 +10,11 @@ Servo servo_A0; //Declare variable to hold servo motor controll
 int iDegrees = 180; //Set start angle for motor controll
 int count = 0; //Declare variable count which will be used to controll how often the servo is being turned
 bool flag = 0; //Declare flag which will "notify" when the right amount of time has passed
+int sec = 0; //Declare int sec that will hold seconds to print
 
 //Setup function
 void setup() {
+  Serial.begin(9600);
   servo_A0.attach(A0); //Start control of the servo motor
   servo_A0.write(iDegrees); //Turn the motor to the value of iDegrees, I.E. 180 degrees
   
@@ -39,6 +41,8 @@ void loop(){
       iDegrees = iDegrees - 6; //Change the value of iDegrees to be itself - 6, this corresponds to a one 60th rotation in the clockwise direction
       servo_A0.write(iDegrees); //Turn the motor
       count = 0; //Reset the count variable to reset timer to 1 second
+      sec++;
+      Serial.println(sec);
     }
     //If count is not 61, I.E. a second has not passed
     else{
