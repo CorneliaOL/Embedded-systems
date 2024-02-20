@@ -46,7 +46,7 @@ void loop(){
   
 }
 
-ISR(TIMER1_COMPA_vect){
+ISR(TIMER1_COMPA_vect){ //interupt service routine
   
   TCNT1  = 0;                           /* first set the timer back to 0 so it resets for next interrupt */
   flag = 1;                             /* set flag to 1  */
