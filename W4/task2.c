@@ -34,6 +34,7 @@ void loop(){
   if (flag==1){
     //If the interupt has happened 61 times, I.E. a second has passed since the last interupt. This was doen since OCR2A is only 8 bits, and can thus not
     //trigger the interupt every second
+    // The calculations for the number is (1/(6e6))*1024*255*COUNT = 1(second) which gives roughly 61.27 ≈ 61
     if(count == 61){
       iDegrees = iDegrees - 6; //Change the value of iDegrees to be itself - 6, this corresponds to a one 60th rotation in the clockwise direction
       servo_A0.write(iDegrees--); //Turn the motor
