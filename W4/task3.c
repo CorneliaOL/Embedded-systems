@@ -69,7 +69,7 @@ void displayValueOnNeoPixel(float value) {
   strip.show(); // show the light up pixels
 }
 
-ISR(TIMER1_COMPA_vect){
+ISR(TIMER1_COMPA_vect){ // interupt service routine
     TCNT1  = 0;                  //First, set the timer back to 0 so it resets for next interrupt
 	flag = 1;                   // then, set the flag to 1 so that the loop will trigger the displayValueOnNeoPixel
 }
