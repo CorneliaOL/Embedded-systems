@@ -1,4 +1,3 @@
-
 // (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
 // Work package 4
 // Exercise 1
@@ -30,6 +29,7 @@ void setup(){
   pinMode(10, OUTPUT);                  /* set pin 10 as output pin */
   pinMode(11, OUTPUT);                  /* set pin 11 as output pin */
   pinMode(12, OUTPUT);                  /* set pin 12 as output pin */
+  Serial.begin(9600);                   /* initialize serial */
 
 }
 
@@ -39,6 +39,7 @@ void loop(){
   	temp = analogRead(A0);                /* variable declaration/initialization to hold voltage at pin A0 */
   	temp = map((temp-20)*3.04, 0, 1023, -40, 125);    /* mapping voltage to temp value */
     updateLEDsBasedOnTemperature();       /* function call - to update LEDs based on temp value */
+    Serial.println(temp);                 /* print temp value in the serial  */
     flag = 0;                               /* set flag to 0 */
     
   }
