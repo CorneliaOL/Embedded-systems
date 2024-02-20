@@ -2,7 +2,7 @@
 // (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
 // Work package 4
 // Exercise 1
-// Submission code: ??????
+// Submission code: 18987221
 
 
 int temp = 0;       /* variable declaration to hold the temprature value */

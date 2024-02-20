@@ -1,7 +1,7 @@
 // (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
 // Work package 4
 // Exercise 3
-// Submission code: ??????
+// Submission code: 18987221
 
 #include <Adafruit_NeoPixel.h>
 
