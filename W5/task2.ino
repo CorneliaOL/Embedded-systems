@@ -109,11 +109,11 @@ ISR(TIMER1_COMPA_vect){
 //This method conditionally checks which LEDs to light, depending on the temperature
 void updateLEDsBasedOnTemperature() {
 
-    digitalWrite(8, (temp>=0));         /* turn on first LED if temp is >= 0 */
-  	digitalWrite(9, (temp>=11));        /* turn on second LED if temp is >= 11 */
-  	digitalWrite(10, (temp>=21));       /* turn on third LED if temp is >= 21 */
-  	digitalWrite(11, (temp>=31));       /* turn on fourth LED if temp is >= 31 */
-  	digitalWrite(12, (temp>=41));       /* turn on fifth LED if temp is >= 41 */
+    digitalWrite(8, (btemp>=0));         /* turn on first LED if temp is >= 0 */
+  	digitalWrite(9, (btemp>=11));        /* turn on second LED if temp is >= 11 */
+  	digitalWrite(10, (btemp>=21));       /* turn on third LED if temp is >= 21 */
+  	digitalWrite(11, (btemp>=31));       /* turn on fourth LED if temp is >= 31 */
+  	digitalWrite(12, (btemp>=41));       /* turn on fifth LED if temp is >= 41 */
 
 
 }
