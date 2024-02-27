@@ -106,7 +106,7 @@ unsigned long currentMillis = millis();
 ISR(TIMER1_COMPA_vect){
   
   TCNT1  = 0;                  //First, set the timer back to 0 so it resets for next interrupt
-  updateLEDsBasedOnTemperature();
+  updateLEDsBasedOnTemperature(); // This should be trigered in loop() by setting a flag for best practice
 
 }
 
