@@ -43,38 +43,33 @@ void setup() {
   pinMode(11, OUTPUT);
   pinMode(12, OUTPUT);
 
-  cli();
-  TCCR1A = 0;
-  TCCR1B = 0;
+  cli(); // stop interruptions while setting up 
+  TCCR1A = 0; //Reset all options converning timer1
+  TCCR1B = 0;//Reset all options converning timer1
   TCCR1B |= B00000011;  // Prescalar value set to 64 CS12=1 , CS11=0, CS10=0
-  TIMSK1 |= B00000010;
+  TIMSK1 |= B00000010;  //Enable compare registry A for timer 1
   OCR1A = 2499;
-  sei();
-  Serial.begin(9600);
+  sei(); // end the block where no interuptions can happen
+  Serial.begin(9600); //begin serial to print later on
 
   // Initialize the OLED display
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {
     Serial.println(F("SSD1306 allocation failed"));
     for(;;); // Don't proceed, loop forever
   }
-  display.display();
+  display.display(); // start display
   delay(2000); // Pause for 2 seconds
-  display.clearDisplay();
+  display.clearDisplay(); // clear the display 
 
-
-
-
-  //Serial.println("Humidity (%)\tTemperature (C)");
-
-  dht.setup(DATA_PIN2);
-  delay(dht.getMinimumSamplingPeriod());
+  dht.setup(DATA_PIN2); // initialize dht instance
+  delay(dht.getMinimumSamplingPeriod()); //delay with the minimum sampling period
   
 }
 
 void loop() {
 
-unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= interval) {
+unsigned long currentMillis = millis(); //get the milliseconds since the program started
+    if (currentMillis - previousMillis >= interval) { // if the time span between now and the previous check is bigger or equal to the specified time interval
         
         // save the last time you updated the OLED
         previousMillis = currentMillis;
@@ -88,12 +83,12 @@ unsigned long currentMillis = millis();
         display.setTextColor(SSD1306_WHITE); // Draw white text
         display.setCursor(0,0); // Start at top-left corner
         display.print(F("Temp: "));
-        if(!isnan(temp)){
+        if(!isnan(temp)){ //if the temp integer is not not a number
         btemp = temp;
         display.print(temp);
         Serial.println(temp);
         }
-        else {
+        else { // print the old temperature and wait for a new value
         display.print(btemp);
         Serial.println(temp);
         }
@@ -103,6 +98,7 @@ unsigned long currentMillis = millis();
 
 }
 
+
 ISR(TIMER1_COMPA_vect){
   
   TCNT1  = 0;                  //First, set the timer back to 0 so it resets for next interrupt
@@ -110,41 +106,14 @@ ISR(TIMER1_COMPA_vect){
 
 }
 
-
+//This method conditionally checks which LEDs to light, depending on the temperature
 void updateLEDsBasedOnTemperature() {
 
-  if(temp < 10){
-    digitalWrite(8,   HIGH);
-    digitalWrite(9,   LOW);
-    digitalWrite(10,  LOW);
-    digitalWrite(11,  LOW);
-    digitalWrite(12,  LOW);
-  } else if (temp >= 10 && temp <= 15){
-    digitalWrite(8,   HIGH);
-    digitalWrite(9,   HIGH);
-    digitalWrite(10,  LOW);
-    digitalWrite(11,  LOW);
-    digitalWrite(12,  LOW);
-  } else if (temp >= 16 && temp <= 18){
-    digitalWrite(8,   HIGH);
-    digitalWrite(9,   HIGH);
-    digitalWrite(10,  HIGH);
-    digitalWrite(11,  LOW);
-    digitalWrite(12,  LOW);
-  } else if (temp >= 19 && temp <= 25){
-    digitalWrite(8,   HIGH);
-    digitalWrite(9,   HIGH);
-    digitalWrite(10,  HIGH);
-    digitalWrite(11,  HIGH);
-    digitalWrite(12,  LOW);
-
-  } else if (temp >= 26 && temp <= 30){
-    digitalWrite(8,   HIGH);
-    digitalWrite(9,   HIGH);
-    digitalWrite(10,  HIGH);
-    digitalWrite(11,  HIGH);
-    digitalWrite(12,  HIGH);
-  }
+    digitalWrite(8, (temp>=0));         /* turn on first LED if temp is >= 0 */
+  	digitalWrite(9, (temp>=11));        /* turn on second LED if temp is >= 11 */
+  	digitalWrite(10, (temp>=21));       /* turn on third LED if temp is >= 21 */
+  	digitalWrite(11, (temp>=31));       /* turn on fourth LED if temp is >= 31 */
+  	digitalWrite(12, (temp>=41));       /* turn on fifth LED if temp is >= 41 */
 
 
 }
