@@ -8,15 +8,15 @@
 #define GREEN_LED 12
 
 // Variables for debouncing
-volatile bool buttonPressed = false;
+volatile bool buttonPressed = false; //Variable that indicates if button is pressed or not
 volatile unsigned long lastDebounceTime = 0; // the last time the output pin was toggled
 unsigned long debounceDelay = 50; // the debounce time; increase if the output flickers
 
 void setup() {
-  pinMode(BUTTON_PIN, INPUT);
-  pinMode(RED_LED, OUTPUT);
-  pinMode(GREEN_LED, OUTPUT);
-  digitalWrite(GREEN_LED, LOW);
+  pinMode(BUTTON_PIN, INPUT); //Set button pin as output
+  pinMode(RED_LED, OUTPUT); //Set the pin the red LED is connected to to output
+  pinMode(GREEN_LED, OUTPUT); //Set the pin the green led is connected to to output
+  digitalWrite(GREEN_LED, LOW); //Turn of the green LED
 
   cli(); // stop interrupts
 
@@ -36,10 +36,10 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(RED_LED, HIGH);
-  delay(1000);
-  digitalWrite(RED_LED, LOW);
-  delay(1000);
+  digitalWrite(RED_LED, HIGH); //Turn on red LED
+  delay(1000);  //Wait 1 sec
+  digitalWrite(RED_LED, LOW); //Turn on red LED
+  delay(1000); //wait 1 sec
 }
 
 ISR(TIMER1_COMPA_vect) {
@@ -48,13 +48,13 @@ ISR(TIMER1_COMPA_vect) {
     // Check button state only if debounce time has passed
     if (digitalRead(BUTTON_PIN) == HIGH) {
       if (!buttonPressed) { // If the button state has changed
-        buttonPressed = true;
-        digitalWrite(GREEN_LED, HIGH);
+        buttonPressed = true; //Set buttonPressed flag to true
+        digitalWrite(GREEN_LED, HIGH); //Turn on green LED
       }
     } else {
       if (buttonPressed) { // If the button state has changed
-        buttonPressed = false;
-        digitalWrite(GREEN_LED, LOW);
+        buttonPressed = false; //Set buttonPressed flag to false
+        digitalWrite(GREEN_LED, LOW); //Turn off green LED
       }
     }
   }
