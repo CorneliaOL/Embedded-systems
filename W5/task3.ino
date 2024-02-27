@@ -1,3 +1,8 @@
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 5
+// Exercise 3
+// Submission code: 1
+
 //Import statements
 #include <dht11.h>
 
@@ -23,7 +28,7 @@ void loop() //Loop function, thiw is in essence a perpetual loop
 {
   int temp = 0; //Initialize variable temp, this will hold temmperature reading
   int light = 0; //Initialize variable light, this will hold the light reading
-  while(1){
+
     light = analogRead(lightRes); //Read the analog pin A4, which is the light sensor, this will give us the voltage of pin A4
   	int dhtValue = DHT11.read(tempSens); //Read the values of the DHT sensor
     Serial.println(light);//Print out the raw value read from the light sensor
@@ -63,5 +68,5 @@ void loop() //Loop function, thiw is in essence a perpetual loop
     delay(500); //Wait 500 ms
     
     
-  }
+  
 }

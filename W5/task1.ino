@@ -1,3 +1,8 @@
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 5
+// Exercise 1
+// Submission code: 1
+
 #define BUTTON_PIN 2
 #define RED_LED 11
 #define GREEN_LED 12

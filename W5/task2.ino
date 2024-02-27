@@ -5,6 +5,11 @@ https://randomnerdtutorials.com/guide-for-oled-display-with-arduino/
 https://stackoverflow.com/questions/40874880/getting-nan-readings-from-dht-11-sensor
 */
 
+// (C) Lucas Holter, Cornelia Olofsson, Rizwan Rafiq, group: 18 (2024)
+// Work package 5
+// Exercise 2
+// Submission code: 1
+
 
 #include <DHT.h>
 #include <Wire.h>               // Include Wire library for I2C
@@ -101,8 +106,7 @@ unsigned long currentMillis = millis();
 ISR(TIMER1_COMPA_vect){
   
   TCNT1  = 0;                  //First, set the timer back to 0 so it resets for next interrupt
-
-    updateLEDsBasedOnTemperature();
+  updateLEDsBasedOnTemperature();
 
 }
 
